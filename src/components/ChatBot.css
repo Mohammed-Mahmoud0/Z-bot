@@ -42,6 +42,17 @@
   border-radius: 18px;
   word-wrap: break-word;
   white-space: pre-wrap;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message-image {
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  object-fit: cover;
 }
 
 .message.user .message-content {
@@ -90,13 +101,79 @@
 
 .input-container {
   display: flex;
+  flex-direction: column;
   padding: 20px;
   background: white;
   border-top: 1px solid #e0e0e0;
   gap: 10px;
 }
 
-.input-container textarea {
+.image-preview {
+  position: relative;
+  display: inline-block;
+  max-width: 200px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid #667eea;
+}
+
+.remove-image {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ff4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.remove-image:hover {
+  background: #cc0000;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.attach-button {
+  padding: 12px 16px !important;
+  background: #f0f0f0 !important;
+  color: #333 !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 20px !important;
+  font-size: 1.2rem !important;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.attach-button:hover:not(:disabled) {
+  background: #e0e0e0 !important;
+  border-color: #667eea !important;
+  transform: translateY(-1px);
+}
+
+.attach-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-row textarea {
   flex: 1;
   padding: 12px;
   border: 2px solid #e0e0e0;
@@ -108,29 +185,29 @@
   transition: border-color 0.3s;
 }
 
-.input-container textarea:focus {
+.input-row textarea:focus {
   border-color: #667eea;
 }
 
-.input-container button {
-  padding: 12px 30px;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-size: 1rem;
+.send-button {
+  padding: 12px 30px !important;
+  background: #667eea !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 20px !important;
+  font-size: 1rem !important;
   cursor: pointer;
   transition: background 0.3s, transform 0.1s;
   font-weight: 600;
 }
 
-.input-container button:hover:not(:disabled) {
-  background: #5568d3;
+.send-button:hover:not(:disabled) {
+  background: #5568d3 !important;
   transform: translateY(-1px);
 }
 
-.input-container button:disabled {
-  background: #ccc;
+.send-button:disabled {
+  background: #ccc !important;
   cursor: not-allowed;
 }
 

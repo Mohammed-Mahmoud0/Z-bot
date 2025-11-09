@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import './App.css';
-import ChatBot from './components/ChatBot';
-import ImageGenerator from './components/ImageGenerator';
+import React, { useState } from "react";
+import "./App.css";
+import ChatBot from "./components/ChatBot";
+import ImageGenerator from "./components/ImageGenerator";
 
 function App() {
-  const [activeTab, setActiveTab] = useState('chat');
+  const [activeTab, setActiveTab] = useState("chat");
 
   return (
     <div className="App">
@@ -15,21 +15,21 @@ function App() {
 
       <div className="tab-container">
         <button
-          className={`tab-button ${activeTab === 'chat' ? 'active' : ''}`}
-          onClick={() => setActiveTab('chat')}
+          className={`tab-button ${activeTab === "chat" ? "active" : ""}`}
+          onClick={() => setActiveTab("chat")}
         >
           💬 Chat
         </button>
         <button
-          className={`tab-button ${activeTab === 'image' ? 'active' : ''}`}
-          onClick={() => setActiveTab('image')}
+          className={`tab-button ${activeTab === "image" ? "active" : ""}`}
+          onClick={() => setActiveTab("image")}
         >
           🎨 Image Generator
         </button>
       </div>
 
       <div className="content-container">
-        {activeTab === 'chat' ? <ChatBot /> : <ImageGenerator />}
+        {activeTab === "chat" ? <ChatBot /> : <ImageGenerator />}
       </div>
     </div>
   );

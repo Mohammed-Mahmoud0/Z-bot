@@ -5,6 +5,7 @@ import os
 import requests
 import base64
 from io import BytesIO
+from openai import OpenAI
 
 app = Flask(__name__)
 CORS(app)
@@ -12,11 +13,15 @@ CORS(app)
 GEMINI_API_KEY = "AIzaSyBas_C8_moPbGqtJytKySyMZyWrVz-Gwkw"
 genai.configure(api_key=GEMINI_API_KEY)
 
+OPENAI_API_KEY = "sk-abcdqrstefgh5678abcdqrstefgh5678abcdqrst"
+openai_client = OpenAI(api_key=OPENAI_API_KEY)
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     try:
         data = request.json
         message = data.get('message', '')
+        image = data.get('image', None)  
         
         if not message:
             return jsonify({
@@ -24,16 +29,42 @@ def chat():
                 'error': 'Message is required'
             }), 400
         
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        response = model.generate_content(message)
-        
-      
-        if hasattr(response, 'text'):
-            response_text = response.text
-        elif hasattr(response, 'candidates') and len(response.candidates) > 0:
-            response_text = response.candidates[0].content.parts[0].text
+        if image:
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": message
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": image
+                            }
+                        }
+                    ]
+                }
+            ]
+            
+            response = openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages,
+                max_tokens=500
+            )
+            
+            response_text = response.choices[0].message.content
         else:
-            response_text = "I apologize, but I couldn't generate a response."
+            model = genai.GenerativeModel('gemini-2.5-flash')
+            response = model.generate_content(message)
+            
+            if hasattr(response, 'text'):
+                response_text = response.text
+            elif hasattr(response, 'candidates') and len(response.candidates) > 0:
+                response_text = response.candidates[0].content.parts[0].text
+            else:
+                response_text = "I apologize, but I couldn't generate a response."
         
         return jsonify({
             'success': True,
