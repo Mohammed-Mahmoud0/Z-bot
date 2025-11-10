@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import ChatBot from "./components/ChatBot";
 import ImageGenerator from "./components/ImageGenerator";
+import ReminderAgent from "./components/ReminderAgent";
+import FineTuning from "./components/FineTuning";
 
 function App() {
   const [activeTab, setActiveTab] = useState("chat");
@@ -9,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🤖 Gemini AI Assistant</h1>
-        <p>Chat with AI or Generate Image Descriptions</p>
+        <h1>🤖 AI Assistant Suite</h1>
+        <p>Chat, Generate Images, Set Reminders & Learn Fine-Tuning</p>
       </header>
 
       <div className="tab-container">
@@ -24,12 +26,27 @@ function App() {
           className={`tab-button ${activeTab === "image" ? "active" : ""}`}
           onClick={() => setActiveTab("image")}
         >
-          🎨 Image Generator
+          🎨 Images
+        </button>
+        <button
+          className={`tab-button ${activeTab === "reminder" ? "active" : ""}`}
+          onClick={() => setActiveTab("reminder")}
+        >
+          🔔 Reminders
+        </button>
+        <button
+          className={`tab-button ${activeTab === "finetune" ? "active" : ""}`}
+          onClick={() => setActiveTab("finetune")}
+        >
+          🎓 Fine-Tuning
         </button>
       </div>
 
       <div className="content-container">
-        {activeTab === "chat" ? <ChatBot /> : <ImageGenerator />}
+        {activeTab === "chat" && <ChatBot />}
+        {activeTab === "image" && <ImageGenerator />}
+        {activeTab === "reminder" && <ReminderAgent />}
+        {activeTab === "finetune" && <FineTuning />}
       </div>
     </div>
   );
